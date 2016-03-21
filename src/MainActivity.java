@@ -16,9 +16,11 @@ public class MainActivity {
 	
 	static String outputName = "features.csv";
 	
+	
+	
 
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		
 		PrintWriter writer = new PrintWriter(outputName, "UTF-8");
@@ -40,7 +42,10 @@ public class MainActivity {
 		    	}
 		    	
 		    	try {
+		    		
 					run(fileName, writer);
+					
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -78,6 +83,20 @@ public class MainActivity {
 		//run();
 		
 		writer.close();
+		
+		
+		MyWekaUtils utils = new MyWekaUtils();
+		
+		//hardcoded features indices
+		int[] featureIndices = new int[] {0,1,2,3,4,5,6};
+		
+		String arffData = utils.csvToArff(utils.readCSV("C:/Users/Joshua/workspace/SmartwatchDataAnalysis/features.csv"), featureIndices);
+		
+		double classification = utils.classify(arffData, 1);
+		
+		System.out.println("Classification: " + classification);
+		
+		
 
 	}
 	
@@ -159,20 +178,20 @@ public class MainActivity {
 				float averageZ = runningSumZ / runningCount;
 				
 				
-				System.out.println("Numbers: ");
+				//System.out.println("Numbers: ");
 				/*for (int j = 0; j < xdata.size(); j++){
 					System.out.print(xdata.get(j) + ", ");
 				}*/
 				
-				System.out.println("Averages: ");
-				System.out.println(allData.get(i)[0] + ": " + String.valueOf(averageX) + ", " + String.valueOf(averageY) + ", " + String.valueOf(averageZ));
+				//System.out.println("Averages: ");
+				//System.out.println(allData.get(i)[0] + ": " + String.valueOf(averageX) + ", " + String.valueOf(averageY) + ", " + String.valueOf(averageZ));
 				
 				double stdvX = getStdDev(averageX, windowData, 0);
 				double stdvY = getStdDev(averageY, windowData, 1);
 				double stdvZ = getStdDev(averageZ, windowData, 2);
 				
-				System.out.println("Standard Deviations: ");
-				System.out.println(allData.get(i-1)[0] + ": " + String.valueOf(stdvX) + ", " + String.valueOf(stdvY) + ", " + String.valueOf(stdvZ));
+				//System.out.println("Standard Deviations: ");
+				//System.out.println(allData.get(i-1)[0] + ": " + String.valueOf(stdvX) + ", " + String.valueOf(stdvY) + ", " + String.valueOf(stdvZ));
 				
 				
 				
